@@ -1,0 +1,52 @@
+Task3: Combined Results
+
+Let us assume that we have two lists:
+1. https://en.wikipedia.org/wiki/Sustainable_energy -> List(Sustainable_energy) which contains atmost 1000 unique links from crawling.
+2. https://en.wikipedia.org/wiki/Solar_power -> List(Solar_power) which contains atmost 1000 unique links from crawling.
+
+Task: Combine the two above mentioned lists into one file with 1000 links at most so that there is minimal loss of data.
+Note: Pages in a shallower depth are more important than deeper ones, also within each individual page, hyperlinks appearing earlier on the webpage should be crawled first.
+
+The below mentioned procedure returns a Merged List having at most 1000 URLs.
+
+CONCEPT::
+ -- We start from Depth 1 and proceed with the merging depth by depth until we reach 1000 URLs or there are no more URLs left to merge.
+ -- For a particular depth, we retrieve all URLs from List(Sustainable_energy) and List(Solar_power).
+ -- Then we calculate the length of the smaller list at that depth. For e.g: If List(Sustainable_energy) has 300 URLs in depth 2 and    	List(Solar_power) has 200 URLs in depth 2, we iterate till 200 and merge one unique URL from List(Sustainable_energy) and then one unique URL from List(Solar_power) alternatively. We ignore any URL if that is already in the merged list.
+ -- After we have merged 200 URLs from both the lists, List(Sustainable_energy) has 100 more URLs in depth 2 which should get preference in merging before proceeding to the next depth.
+ -- So, we merge the remaining URLs at the present depth to the list.
+ -- We move to the next depth and continue the same process till we have 1000 URLs in the merged list or there are no more URLs left to merge.
+
+PSEUDOCODE::
+GIVEN: List(Sustainable_energy), List(Solar_power)
+RETURNS: MERGED_LIST
+procedure MERGELISTS[List(Sustainable_energy), List(Solar_power)]
+	while length(MERGED_LIST) <= 1000 and ((length[List(Sustainable_energy)] > 0)or (length[List(Solar_power)] > 0)) do
+		DEPTH <- 1
+		URL_LIST_SUSTAINABLE_ENERGY <- URLS from List(Sustainable_energy) at DEPTH
+		URL_LIST_SOLAR_POWER <- URLS from List(Solar_power) at DEPTH
+		MIN_URLS_AT_SAME_DEPTH <- MINIMUM (length(URL_LIST_SUSTAINABLE_ENERGY), length(URL_LIST_SOLAR_POWER))
+		for 1 to MIN_URLS_AT_SAME_DEPTH do
+			Remove the top most URL from URL_LIST_SUSTAINABLE_ENERGY
+			if length(MERGED_LIST) < 1000 and the URL is not in MERGED_LIST
+				Merge it to the MERGED_LIST	
+			Remove the top most URL from URL_LIST_SOLAR_POWER
+			if length(MERGED_LIST) < 1000 and the URL is not in MERGED_LIST
+				Merge it to the MERGED_LIST	
+		end for
+		REMAINING_NUMBER_OF_URLS_AT_SAME_DEPTH <- DIFFERENCE [length(URL_LIST_SUSTAINABLE_ENERGY), length(URL_LIST_SOLAR_POWER)]
+		if length(URL_LIST_SUSTAINABLE_ENERGY) > length(URL_LIST_SOLAR_POWER)
+			LONGER_LIST <- URL_LIST_SUSTAINABLE_ENERGY
+		else 
+			LONGER_LIST <- URL_LIST_SOLAR_POWER
+		for 1 to REMAINING_NUMBER_OF_URLS_AT_SAME_DEPTH do
+			Remove the top most URL from () LONGER_LIST
+			if length(MERGED_LIST) < 1000 and the URL is not in MERGED_LIST
+				Merge it to the list MERGED_LIST
+		end for
+		DEPTH ++
+	end while
+	return MERGED_LIST
+end prodecure
+			
+	

@@ -1,0 +1,27 @@
+Task 2C:
+
+Breadth first crawling:
+In this approach, we first crawl the seed (Depth 1). Then we move to the next depth (Depth 2) using the very first relevant URL obtained from the seed and crawl the page. Now, we crawl all the pages in Depth 2 before moving to the next depth and so on till we fetch all 1000 URLs or reach the maximum permissible Depth 5. The first five URLs are mentioned below:
+
+1. https://en.wikipedia.org/wiki/Sustainable_energy
+2. https://en.wikipedia.org/wiki/Passive_solar_building_design
+3. https://en.wikipedia.org/wiki/Solar_energy
+4. https://en.wikipedia.org/wiki/Solar_heating
+5. https://en.wikipedia.org/wiki/Solar_photovoltaics
+
+The benefit of breadth first crawling is that the URLs closer to the seed in hierarchy gets more priority that the URLs located at greater depth. As a result, we should ideally retrieve more valuable and relevant information by crawling via breadth first technique.
+
+Depth first crawling:
+In this approach, we first crawl the seed (Depth 1). Then we move to the next depth (Depth 2) using the very first relevant URL obtained from the seed and crawl the page. Next we move to the next depth (Depth 3) using the very first URL obtained for the page in Depth 2. We continue like this till we reach the maximum permissible Depth 5. Once we reach depth 5, we backtrack and start crawling the uncrawled pages at lesser depths. This process continues till we fetch all 1000 URLs or run out of unique relevant URLs. The first five URLs are mentioned below:
+
+1. https://en.wikipedia.org/wiki/Sustainable_energy
+2. https://en.wikipedia.org/wiki/Passive_solar_building_design
+3. https://en.wikipedia.org/wiki/Solar_energy
+4. https://en.wikipedia.org/wiki/Solar_Energy_(journal)
+5. https://en.wikipedia.org/wiki/Solar_heating
+
+Depth first crawling yields good results if the graph is sparse or there are no bounds on the maximum depth till which we can crawl.
+
+Comparison of results:
+ In case of Breadth first crawling, we have crawled all 1000 URLs whereas for Depth first crawling, our crawl ended after 630 URLs. While using depth first technique, once we reach a page of Depth 5, we add that page(say Page P) to the list of pages_crawled but do not visit the URLs obtained from that page as we are not allowed to go beyond maximum depth level. Once we start backtracking, if we find the same page(Page P) at some lower depth, we donot crawl the page because it is already present in the list of pages_crawled. Thus, we never visit the URLs obtained from the page P. This happens for all pages that we find in the maximum permissible depth. Hence, the number of pages obtained from crawling in the depth first technique is less than the number of pages obtained from crawling in the breadth first technique.
+ The top 3 URLs crawled using both techniques happen to be same for our seed_url + keyword combination. However, as we proceed in the list, both techniques crawl different URLs in their own order. In an ideal scenario, first two URLs should always be the same irrespective of whether it is breadth first crawling or depth first crawling. It is beacause of the reason that in the first iteration we will always crawl the seed and in the next iteration, we will crawl the first URL obtained from the seed page.  
