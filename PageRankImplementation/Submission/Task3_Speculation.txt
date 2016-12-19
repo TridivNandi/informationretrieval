@@ -1,0 +1,52 @@
+Speculation on why the top 5 web pages have high Page Rank values:
+-------------------------------------------------------------------
+
+Results:
+--------
+The top 5 pages of 'G2_Graph.txt' as per their PageRank values are as follows:
+
+1. WT21-B37-76
+2. WT21-B37-75
+3. WT25-B39-116
+4. WT23-B21-53
+5. WT24-B40-171
+
+The top 5 pages of the same graph as per their inlink-counts are as follows:
+
+1. WT21-B37-76    Inlinks: 2568
+2. WT18-B29-37    Inlinks: 2269
+3. WT01-B18-225   Inlinks: 2260
+4. WT23-B27-29    Inlinks: 1940
+5. WT21-B37-75    Inlinks: 1704
+
+Explanation:
+------------
+PageRank is a type of query-independent metadata that can improve ranking for web search. It uses the links between web pages as a way to measure popularity. So, the obvious measure is to count the number of inlinks for each page to calculate the page rank of that particular page.
+Moreover, if a page has an in-link from a popular page(page having higher page rank value), it increases the page rank for that particular page more that the situation where it has got an inlink from a less popular page. For example, a page P1 having one in-link from a popular page like CNN, it will have higher page rank value than another page P2 which has two or three in-links from some less popular pages like a personal blog. Thus, we can say that higher page rank means the page has got more in links and the pages in the in-links are themselves again having high page rank values. In the above results, we can see that the page 'WT18-B29-37' has got more in-links than 'WT21-B37-75' but it is not having more page rank value than 'WT21-B37-75'. So, it might happen that the pages pointing to 'WT18-B29-37' have themselves got lesser page rank values leading to the decrease in the overall page rank of 'WT18-B29-37'.
+
+Another factor that is taken into consideration while calcuating the page rank is the number of out-links. For example, if a page P1 is having in-link from P2 and P2 in turn has a lot of outlinks, then the increment of PageRank in P1 due to inlink P2 will be comparatively less. Hence, the page rank of a page P also depends on the number of outgoing links in the page which points to P. Additionally, we assume that web is an interconnected graph of pages where we can go from one page to all other pages either by following its outlinks or via teleportation. So, having higher number of outlinks also in turn decreases the page rank of a particular page in the long run. In the above results, we can see that 'WT18-B29-37' has got a high number of in-links but it does not appear in the top 5 list of Page ranks. However, 'WT21-B37-75' ranks 2nd in the list as per page ranks but has relatively lesser in-links. It might be because of the fact that 'WT21-B37-75' has got just three outlinks and it does not distribute its own pagerank that much because of less out-links. On the other hand, 'WT18-B29-37' has more number of outlinks and hence its page rank gets distributed resulting in less page rank value in the long run.
+
+Additional results: 
+-------------------
+
+The top 5 pages of 'G1_Graph.txt' as per their PageRank values are as follows:
+
+1. Digital_object_identifier
+2. International_Standard_Book_Number
+3. PubMed_Identifier
+4. Japan
+5. United_States
+
+The top 5 pages of the same graph as per their inlink-counts are as follows:
+
+1. International_Standard_Book_Number   Inlinks: 479
+2. Digital_object_identifier 			Inlinks: 454
+3. Renewable_energy 					Inlinks: 420
+4. Efficient_energy_use 				Inlinks: 279
+5. United_States 						Inlinks: 253
+
+Conclusion:
+-----------
+Analyzing the results obtained from both G1_Graph and G2_Graph, we can see that pages with higher number of in-links have a higher chance of obtaining better page ranks but that is not necessarily the case all the time because other criteria (as explained in the 'Explanation') are also taken into consideration while calculating page rank.
+
+
