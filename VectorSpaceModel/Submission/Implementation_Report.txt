@@ -1,0 +1,46 @@
+Report on the implementation details:
+-------------------------------------
+
+In order to implement the Vector Space Model and score the documents using Cosine Similarity, I have performed the following steps:
+
+Step 1: Using the corpus, generate the inverted index for the unigrams.
+Step 2: For each query in the 'QueryFile.txt', repeat the following:
+	Rank and print the documents as per their scores calculated using the below steps:
+	Step 2A: Maintain a list of unique query terms in the query.
+	Step 2B: For each unique query term, retrieve all the inverted lists corresponding to that term from the inverted index generated in Step1.
+	Step 2C: Calculate normalized_term_frequency of the unique query terms in all the documents they appear using the following formulae:
+			 Normalized_term_frequency of t1 in doc D1 = (No. of times t1 appear in D1) / (Total number of terms in D1)
+	Step 2D: Calculate the inverse_document_frequency of the unique query terms in all the documents using the following formulae:
+			 Inverse_document_frequency of term t1 = 1 + log (Total no. of documents) / (number of documents in which t1 appears) + 1
+	Step 2E: Calculate tf*idf for all unique query terms in the documents they appear using the below formulae:
+			 tf*idf of t1 in doc D1 = Normalized_term_frequency of t1 in doc D1 * Inverse_document_frequency of term t1
+	Step 2F: Calculate tf*idf of the query terms for the query provided using the formulae mentioned above. 
+	Step 2G: These tf*idf are the weights of the terms in the Documents and Query Vectors which will be used for calculating Cosine Similarity.
+	Step 2H: Calculate cosine similarity scores for all the documents in the retrieved inverted lists and the query using the following formulae:
+	          Cosine Similarity(Q, D1) = Dot Product (Q, D1) / (Magnitude of Query Vector Q) * (Magnitude of Document Vector D1)
+	Step 2I: Sort the documents as per their cosine similarity scores in decreasing order.
+	Step 2J: Print at most top 100 documents along with their similarity scores in the below format:
+	         QueryID 'Q0' DocName(DocID) Rank CosineSim_Score 'VSM'
+			 Example- For the first query in the QueryFile, a typical entry looks like:
+			 1 Q0 Globalwarming(docID394) 1 0.308444761909 VSM
+
+Rationale behind the implementation methodology:
+-------------------------------------------------
+
+-- Among the many different weighting schemes available, I have used tf*idf as the term weights for the query and the document terms. The term frequency component(tf) reflects the importance of a term in a document D1 or query. The inverse document frequency component(idf) reflects the importance of the term in the collection of documents. The more document that a term occurs in, the less discriminating the term is between documents and consequently the less useful it will be in retrieval.
+
+-- I have also normalized the term frequency. In reality, each document will be of different size. On a large document the frequency of the terms will be much higher than the smaller ones. Hence, I need to normalize the term frequecies based on the size of the document. To achieve that I have divided the term frequecies by the total number of terms in the document.
+
+-- For inverse document frequency calculation, I am adding 1 to the denominator to prevent it from becoming 0 when the term doesnot appear in any document. I am also adding 1 to the log values to prevent entire idf value from becoming 0.
+
+-- In our vector space model implementation, document and queries are assumed to be part of a t-dimensional vector space, where t is the number of index terms in the document for which I am calculating Cosine similarity. A Document D1 is represented by a vector of index terms:
+D1 = (d11, d12, d13,..., d1n) where d11 d12... etc are the weights of the terms. Queries are also represented the sameway as documents. A query Q is represented by a vector of n weights Q = (q1, q2, q3,..., qn). If a particular term doesnot appear in the query, its weight is replaced by 0.
+
+
+			 
+			 
+
+	
+	
+	
+	
