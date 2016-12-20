@@ -1,0 +1,74 @@
+The stop list generated using the unigram data is given below:
+
+STOP LIST:
+------------
+
+the 
+of 
+and 
+in 
+to 
+a 
+is 
+for 
+as 
+by 
+from 
+on 
+with 
+that 
+are 
+s 
+or 
+be 
+edit 
+at 
+was 
+an 
+it 
+this 
+2 
+which 
+has 
+new 
+also 
+can 
+1 
+
+-------------
+
+METHOD USED FOR GENERATING STOP LIST:
+--------------------------------------
+
+There are various ways of generating a stoplist like using the most frequent terms as stop words, using the least frequent terms as stop words,
+using low idf terms as stop words etc. We have generated our stoplist using the following strategy:
+
+	1. Determine the term frequencies for each unique word across the corpus
+	2. Sort the terms in descending order of term frequency
+	3. Use top N terms to be the stop words
+	4. Hand-filter the stop list to exclude the terms which are relevant to the domain of the documents being indexed
+	
+In our case the value of N is 35. So, we have taken top 35 terms from our term frequency table to generate the stop list. However, top 35 words included four topically relevant terms namely : 
+
+	a. energy -> Total term frequency : 37054
+	b. retrieved -> Total term frequency : 25135
+	c. power -> Total term frequency : 21495
+	d. solar -> Total term frequency : 10604
+
+So, these four above-mentioned terms are excluded from the stop list.
+
+CHOOSING CUT-OFF VALUE, EXPLANATION AND STOP LIST CONTENT:
+-----------------------------------------------------------
+
+The cut-off value for our stoplist for the unigram is 35. The cut-off value should be chosen is such a way that we are including only those words in our stop list which are frequent and add very less or no value to our index. As the stop words are not indexed, we should be careful to not include any such word in our stop list which might hamper retrieval procedures during query processing. For example, if we include the term 'energy' in our stop list, it will not be indexed. So, any query having the term 'energy' will not find a match with any of the documents in our corpus. This should not be the case as the Wikipedia articles that we have used for indexing are mainly about the topic 'energy'. So, we have decided to exclude the topically relevant terms like 'energy', 'retrieved', 'power' and 'solar' from our stop list. 
+
+On careful verification of our term frequency table for unigrams, we can see that there are a lot of determiners and prepositions in our top 35 most frequent terms. These terms rarely indicate anything about document relevance on their own and appear a lot across our corpus. So, removing them before indexing will save a lot of disk space. Additionally, it will decrease our index size leading to an increase in our retrieval efficiency and effectiveness. However, after the first 35 terms we can see topically relevant terms like 'fuel' 'water' 'world' 'gas' etc. in our term frequency table which should not be removed from our index. So, we have decided to keep the cut off value as 35.
+
+In general, the cut-off value should be chosen is such a way that we are not excluding topically relevant terms from our index as well as discarding those frequent terms which adds little or no value to our index. 
+
+Our stop list contains the most popular determiners of English language like 'the', 'a', 'an', 'that', 'this' etc. It also contains prepositions and auxiliary verbs like 'in', 'to', 'of', 'for', 'by', 'is', 'are' etc along with common numeric terms like '1' '2'. Most of them are function words -- words that have little meaning apart from other words -- which help us in structuring proper sentences in English. If we are considering individual words in the retrieval process and not phrases, these function words are of very little help. Hence, they can be safely removed before generating index.
+
+
+	
+
+
